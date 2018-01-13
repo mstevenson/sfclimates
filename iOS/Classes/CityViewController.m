@@ -117,7 +117,7 @@
             [label setAttributedText:attributedText];
             [_cityMapImageView addSubview:label];
 
-            CGRect tempRect = CGRectMake(condRect.origin.x-tempTextSize.width,
+            CGRect tempRect = CGRectMake(condRect.origin.x-tempTextSize.width * 15/16,
                                          condRect.origin.y+(condRect.size.height-tempTextSize.height)/2,
                                          tempTextSize.width, tempTextSize.height);
             UILabel *tempLabel = [[UILabel alloc] initWithFrame:(CGRect)tempRect];
@@ -158,14 +158,9 @@
             // Get temperature string
             int tempInt = (int)[observation temperature];
             NSString *temperatureString = [NSString formatTemperature:tempInt showDegree:YES];
-
-            CGFloat right = CGRectGetMaxX(tempLabel.frame);
+            
             tempLabel.attributedText = [[NSAttributedString alloc] initWithString:temperatureString attributes:_tempFontAttributes];
             [tempLabel sizeToFit];
-
-            CGRect frame = tempLabel.frame;
-            frame.origin.x = right - frame.size.width * 15/16;
-            [tempLabel setFrame:frame];
         }
 
 		UIImageView* imageView = [nameToCondViewDict objectForKey:neighborhoodName];
