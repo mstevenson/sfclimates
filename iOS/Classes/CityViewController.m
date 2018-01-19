@@ -43,6 +43,11 @@
 	UITapGestureRecognizer *tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
 	[self.view addGestureRecognizer:tapgr];
 
+    // Maintain background image aspect ratio
+    float width = _cityMapImageView.frame.size.width;
+    float navBarOffset = self.navigationController.navigationBar.frame.size.height;
+    [_cityMapImageView setFrame:CGRectMake(0, navBarOffset, width, width * 1.3125)];
+    
     _labelFontAttributes = @{
         NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0],
         NSForegroundColorAttributeName: [UIColor colorWithWhite: 0.70 alpha:1]
@@ -101,6 +106,8 @@
         {
             NSString *name = [neighborhood name];
             CGRect condRect = [neighborhood rect];
+            // fudge the vertical offset to match the repositioned background image
+            condRect.origin.y -= _cityMapImageView.frame.origin.y;
 
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:condRect];
             [_cityMapImageView addSubview:imageView];
@@ -131,15 +138,18 @@
     }
 
     BOOL isNight = [_weatherDataModel isNight];
+    isNight = false;
 
     // Set city map background.
     if (isNight)
     {
         [_cityMapImageView setImage:[UIImage imageNamed:@"cityMapNight"]];
+        [self.view setBackgroundColor:[UIColor colorWithRed:(70.0/255.0) green:(70.0/255.0) blue:(70.0/255.0) alpha:1]];
     }
     else
     {
         [_cityMapImageView setImage:[UIImage imageNamed:@"cityMapDay"]];
+        [self.view setBackgroundColor:[UIColor colorWithRed:0 green:(75.0/255.0) blue:(133.0/255.0) alpha:1]];
     }
 
     for (Neighborhood *neighborhood in neighborhoodsArray)
@@ -292,7 +302,7 @@
     }
 
     // Scale the tap point to the image size
-    CGSize viewSize = [self.view bounds].size;
+    CGSize viewSize = [_cityMapImageView bounds].size;
     CGSize imageBounds = [patchWorkMap size];
     point.x *= imageBounds.width/viewSize.width;
     point.y *= imageBounds.height/viewSize.height;
@@ -323,8 +333,11 @@
 		//4 for 4 bytes of data per pixel, w is width of one row of data.
 		//int offset = 4*((w*round(point.y))+round(point.x));
 		int offset = ((w*round(point.y))+round(point.x));
-        unsigned char *pixelPtr = data+offset*4;
-		colorAsString = [NSString stringWithFormat:@"%02X%02X%02X", pixelPtr[1], pixelPtr[2], pixelPtr[3]];
+        if (offset <= w * h)
+        {
+            unsigned char *pixelPtr = data+offset*4;
+            colorAsString = [NSString stringWithFormat:@"%02X%02X%02X", pixelPtr[1], pixelPtr[2], pixelPtr[3]];
+        }
 		//DLog(@"%@", colorAsString);
 	}
 	
