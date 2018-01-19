@@ -45,8 +45,8 @@
 
     // Maintain background image aspect ratio
     float width = _cityMapImageView.frame.size.width;
-    float navBarOffset = self.navigationController.navigationBar.frame.size.height;
-    [_cityMapImageView setFrame:CGRectMake(0, navBarOffset, width, width * 1.3125)];
+    float offset = UIApplication.sharedApplication.statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
+    [_cityMapImageView setFrame:CGRectMake(0, offset, width, width * 1.3125)];
     
     _labelFontAttributes = @{
         NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0],
@@ -123,7 +123,7 @@
             NSString *name = [neighborhood name];
             CGRect condRect = [neighborhood rect];
             // fudge the vertical offset to match the repositioned background image
-            condRect.origin.y -= _cityMapImageView.frame.origin.y;
+            condRect.origin.y -= self.navigationController.navigationBar.frame.size.height;
 
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:condRect];
             [_cityMapImageView addSubview:imageView];
