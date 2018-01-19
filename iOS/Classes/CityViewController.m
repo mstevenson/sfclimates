@@ -95,6 +95,11 @@
 
 - (void)drawNewData
 {
+    if (_weatherDataModel.neighborhoods.count == 0)
+    {
+        return;
+    }
+    
     NSArray *neighborhoodsArray = [_weatherDataModel neighborhoods];
 
     if (!nameToCondViewDict)
@@ -147,6 +152,7 @@
         [_cityMapImageView setImage:[UIImage imageNamed:@"cityMapNight"]];
         [self.view setBackgroundColor:[UIColor colorWithRed:(70.0/255.0) green:(70.0/255.0) blue:(70.0/255.0) alpha:1]];
         [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
+        [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
         [self.navigationController.navigationBar setTintColor:[UIColor lightGrayColor]];
     }
     else
