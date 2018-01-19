@@ -5,7 +5,7 @@
 	<key>FF0000</key>
 	<string>Financial District</string>
 	<key>FFFF00</key>
-	<string>North Beach</string>
+	<string>Marina</string>
 	<key>0000FF</key>
 	<string>Hayes Valley</string>
 	<key>F15A24</key>
@@ -36,7 +36,5 @@
 	<string>Mission</string>
 	<key>29ABE2</key>
 	<string>Twin Peaks</string>
-	<key>000000</key>
-	<string>Presidio</string>
 </dict>
 </plist>
