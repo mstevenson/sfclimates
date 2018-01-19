@@ -138,7 +138,6 @@
     }
 
     BOOL isNight = [_weatherDataModel isNight];
-    isNight = false;
 
     // Set city map background.
     if (isNight)
