@@ -77,7 +77,9 @@
                                         completionHandler:^(NSData *data,
                                                             NSURLResponse *response,
                                                             NSError *error) {
-                                            app.networkActivityIndicatorVisible = NO;
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                app.networkActivityIndicatorVisible = NO;
+                                            });
                                             _downloadInProgress = NO;
                                             WeatherDataModel *weatherDataModel = nil;
                                             if (error != nil)

@@ -61,7 +61,9 @@
                                                                        object:nil queue:nil
                                                                    usingBlock:^(NSNotification *note) {
                                                                        _weatherDataModel = [[note userInfo] objectForKey:@"model"];
-                                                                       [self drawNewData];
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           [self drawNewData];
+                                                                       });
                                                                    }];
 }
 
