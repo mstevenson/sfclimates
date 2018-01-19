@@ -65,6 +65,15 @@
                                                                            [self drawNewData];
                                                                        });
                                                                    }];
+    
+    [_refreshButton addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)refreshData
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:RequestRefreshNotificationName
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -201,20 +210,6 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer*)sender
 {
-    if (CGRectContainsPoint([self.navigationController.navigationBar frame], [sender locationInView:self.view])) {
-        // gesture occured in navigation bar, so return;
-        return;
-    }
-
-    // If tap point is within the refresh button, refresh the data
-    if (CGRectContainsPoint([self.refreshButton frame], [sender locationInView:self.view]))
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RequestRefreshNotificationName
-                                                            object:self
-                                                          userInfo:nil];
-        return;
-    }
-
 	if (sender.state == UIGestureRecognizerStateEnded)
 	{
 		// Get the patchwork map color at the tap location and use it to figure
