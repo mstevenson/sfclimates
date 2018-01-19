@@ -40,6 +40,10 @@
                                                                        _weatherDataModel = [[note userInfo] objectForKey:@"model"];
                                                                        [self drawNewData];
                                                                    }];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:RequestRefreshNotificationName
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 - (void)viewDidUnload
