@@ -206,7 +206,7 @@
 	{
 		// Get the patchwork map color at the tap location and use it to figure
 		// out which neighborhood was selected based on color.
-		CGPoint tapPoint = [sender locationInView:self.view];
+		CGPoint tapPoint = [sender locationInView:_cityMapImageView];
 
 		NSString *colorAsString = [self getPixelColorAtPointAsHexString:tapPoint];
 		if (colorAsString == nil) return;
@@ -332,7 +332,7 @@
 		//4 for 4 bytes of data per pixel, w is width of one row of data.
 		//int offset = 4*((w*round(point.y))+round(point.x));
 		int offset = ((w*round(point.y))+round(point.x));
-        if (offset <= w * h)
+        if (offset > 0 && offset <= w * h)
         {
             unsigned char *pixelPtr = data+offset*4;
             colorAsString = [NSString stringWithFormat:@"%02X%02X%02X", pixelPtr[1], pixelPtr[2], pixelPtr[3]];
