@@ -144,11 +144,16 @@
     {
         [_cityMapImageView setImage:[UIImage imageNamed:@"cityMapNight"]];
         [self.view setBackgroundColor:[UIColor colorWithRed:(70.0/255.0) green:(70.0/255.0) blue:(70.0/255.0) alpha:1]];
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
+        [self.navigationController.navigationBar setTintColor:[UIColor lightGrayColor]];
     }
     else
     {
         [_cityMapImageView setImage:[UIImage imageNamed:@"cityMapDay"]];
         [self.view setBackgroundColor:[UIColor colorWithRed:0 green:(75.0/255.0) blue:(133.0/255.0) alpha:1]];
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+        [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(43.0/255.0) green:(151.0/255.0) blue:(215.0/255.0) alpha:0.5]];
     }
 
     for (Neighborhood *neighborhood in neighborhoodsArray)
